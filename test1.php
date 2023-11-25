@@ -6,10 +6,13 @@ include 'FonctionsConnexion.php';
 //connexion à la base de données
 $connex=connexionBDD('./private/parametres.ini');
 //test de la fonction ajouterUtilisateur
-ajouterUtilisateur('Doe', 'John', '999618078', $connex);
+$result=ajouterUtilisateur('Doe', 'John', '999618078', $connex);
+echo $result;
 //test de la fonction getUtilisateur
 $result = getUtilisateur('999618078', $connex);
+print_r($result);
 echo $result['utilisateur_nom'];
 echo $result['utilisateur_prenom'];
 echo $result['utilisateur_rfid_uid'];
+echo "Bonjour"
 ?>
