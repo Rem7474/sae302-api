@@ -1,7 +1,7 @@
 <?php
 //Fonction pour récupérer les informations de l'utilisateur à partir de son id
 function getUtilisateur($id, $connex){
-    $sql = "SELECT * FROM utilisateur WHERE id = :id";
+    $sql = "SELECT * FROM utilisateur WHERE utilisateur_rfid_uid = :id";
     $stmt = $connex->prepare($sql);
     $stmt->bindValue(':id', $id);
     $stmt->execute();
