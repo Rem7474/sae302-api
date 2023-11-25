@@ -6,9 +6,9 @@ function ConnexionBDD($fichierParametre) {
     // connexion à la bdd (connexion non persistante)
     try {
         $connex = new PDO($dsn, $user, $pass); // tentative de connexion
-        print "Connecté :)<br />";// si réussite
+        //print "Connecté :)<br />";// si réussite
     } catch (PDOException $e) { // si échec
-        print "Erreur de connexion à la base de données ! : " . $e->getMessage();
+        //print "Erreur de connexion à la base de données ! : " . $e->getMessage();
         die(""); // Arrêt du script - sortie.
     }
     return $connex; // on retourne le connecteur (à l'appelant)
