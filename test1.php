@@ -9,7 +9,7 @@ $connex=connexionBDD('./private/parametres.ini');
 ajouterUtilisateur('Doe', 'John', '999618078', $connex);
 //test de la fonction getUtilisateur
 $result = getUtilisateur('999618078', $connex);
-echo $result['Utilisateur_Nom'];
-echo $result['Utilisateur_Prenom'];
-echo $result['Utilisateur_RFIDUID'];
+echo $result['utilisateur_nom'];
+echo $result['utilisateur_prenom'];
+echo $result['utilisateur_rfid_uid'];
 ?>
