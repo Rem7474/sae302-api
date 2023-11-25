@@ -5,7 +5,7 @@ function getUtilisateur($id, $connex){
     $stmt = $connex->prepare($sql);
     $stmt->bindValue(':id', $id);
     $stmt->execute();
-    $result = $stmt->fetchALL();
+    $result = $stmt->fetchColumn();
     return $result;
 }
 //fonction test qui ajoute un utilisateur
