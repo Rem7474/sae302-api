@@ -14,5 +14,6 @@ print_r($result);
 echo $result['utilisateur_nom'];
 echo $result['utilisateur_prenom'];
 echo $result['utilisateur_rfid_uid'];
-echo "Bonjour"
+echo "Bonjour";
+print "Bonjour";
 ?>
