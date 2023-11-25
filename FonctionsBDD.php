@@ -8,13 +8,25 @@ function getUtilisateur($id, $connex){
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     return $result;
 }
-//fonction test qui ajoute un utilisateur
+//fonction pour ajouter un utilisateur
 function ajouterUtilisateur($nom, $prenom, $id, $connex){
     $sql = "INSERT INTO utilisateur (utilisateur_rfid_uid, utilisateur_nom, utilisateur_prenom) VALUES (:id, :nom, :prenom) RETURNING utilisateur_id";
     $stmt = $connex->prepare($sql);
     $stmt->bindValue(':id', $id);
     $stmt->bindValue(':nom', $nom);
     $stmt->bindValue(':prenom', $prenom);
+    $stmt->execute();
+    $result = $stmt->fetchColumn();
+    return $result;
+}
+//fonction pour ajouter un produit
+function ajoutProduit($barecode, $nom, $prixachat, $prixvente, $connex){
+    $sql = "INSERT INTO produit (produit_barecode, produit_nom, produit_prix_achat, produit_prix_vente) VALUES (:barecode, :nom, :prixachat, :prixvente) RETURNING produit_barecode";
+    $stmt = $connex->prepare($sql);
+    $stmt->bindValue(':barecode', $barecode);
+    $stmt->bindValue(':nom', $nom);
+    $stmt->bindValue(':prixachat', $prixachat);
+    $stmt->bindValue(':prixvente', $prixvente);
     $stmt->execute();
     $result = $stmt->fetchColumn();
     return $result;
