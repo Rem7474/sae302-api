@@ -6,7 +6,6 @@ function getUtilisateur($id, $connex){
     $stmt->bindValue(':id', $id);
     $stmt->execute();
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
-    $stmt->closeCursor();
     return $result;
 }
 //fonction test qui ajoute un utilisateur
@@ -17,7 +16,6 @@ function ajouterUtilisateur($nom, $prenom, $id, $connex){
     $stmt->bindValue(':nom', $nom);
     $stmt->bindValue(':prenom', $prenom);
     $stmt->execute();
-    $stmt->closeCursor();
 }
 
 
