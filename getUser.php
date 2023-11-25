@@ -22,6 +22,7 @@ if ($result == null) {
     die(json_encode(array('message' => 'User not found')));
 }
 $json = json_encode($result);
-$json["message"] = "User found";
+//ajout d'une valeur de la clé message
+$json = substr_replace($json, '"message":"User found",', 1, 0);
 echo $json;
 ?>
