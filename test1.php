@@ -2,15 +2,15 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 header('Content-Type: application/json');
-$id=$_GET['id'];
-if (empty($id)) {
+if (empty($_GET['id'])) {
     //affiche un message d'erreur formaté en JSON
     die(json_encode(array('message' => 'Missing id')));
 }
-else if (!is_numeric($id)) {
+else if (!is_numeric($_GET['id'])) {
     //affiche un message d'erreur formaté en JSON
     die(json_encode(array('message' => 'id must be numeric')));
 }
+$id = $_GET['id'];
 //inclure le fichier fonctionsBDD
 include 'FonctionsBDD.php';
 //inclure le fichier fonctionsConnexion
