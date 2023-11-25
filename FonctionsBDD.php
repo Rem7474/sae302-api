@@ -5,17 +5,19 @@ function getUtilisateur($id, $connex){
     $stmt = $connex->prepare($sql);
     $stmt->bindValue(':id', $id);
     $stmt->execute();
-    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    $result = $stmt->fetchColumn();
     return $result;
 }
 //fonction test qui ajoute un utilisateur
 function ajouterUtilisateur($nom, $prenom, $id, $connex){
-    $sql = "INSERT INTO utilisateur (Utilisateur_RFIDUID, Utilisateur_Nom, Utilisateur_Prenom) VALUES (:id, :nom, :prenom)";
+    $sql = "INSERT INTO utilisateur (utilisateur_rfid_uid, utilisateur_nom, utilisateur_prenom) VALUES (:id, :nom, :prenom) RETURNING utilisateur_id";
     $stmt = $connex->prepare($sql);
     $stmt->bindValue(':id', $id);
     $stmt->bindValue(':nom', $nom);
     $stmt->bindValue(':prenom', $prenom);
     $stmt->execute();
+    $result = $stmt->fetchColumn();
+    return $result;
 }
 
 
