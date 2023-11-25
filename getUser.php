@@ -22,5 +22,6 @@ if ($result == null) {
     die(json_encode(array('message' => 'User not found')));
 }
 $json = json_encode($result);
+$json["message"] = "User found";
 echo $json;
 ?>
