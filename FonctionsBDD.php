@@ -31,4 +31,13 @@ function ajoutProduit($barecode, $nom, $prixachat, $prixvente, $connex){
     $result = $stmt->fetchColumn();
     return $result;
 }
+//fonction pour récupérer les informations d'un produit à partir de son barecode
+function getProduit($barecode, $connex){
+    $sql = "SELECT * FROM produit WHERE produit_barecode = :id";
+    $stmt = $connex->prepare($sql);
+    $stmt->bindValue(':id', $barecode);
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $result;
+}
 ?>
