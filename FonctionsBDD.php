@@ -83,4 +83,50 @@ function updateStock($barcode, $stock, $connex){
     }
     return $result;
 }
+function addVente($user, $barcode, $quantite, $connex){
+    //Etape 1 : vérifier si le produit est enregistré dans la table produit
+    $infosProduit = getProduit($barcode, $connex);
+    //si le résultat est vide, alors le produit n'est pas enregistré dans la table produit
+    if(!empty($infosProduit)){
+        $produit=false;
+    }
+    else {
+        $produit=true;
+    }
+    //Etape 2 : vérifier si le produit est enregistré dans la table stock
+    $infosStock = getStock($barcode, $connex);
+    //si le résultat est vide, alors le produit n'est pas enregistré dans la table stock
+    if(empty($infosStock)){
+        $stock=false;
+    }
+    else {
+        $stock=true;
+    }
+    //Etape 3 : vérifier si l'utilisateur est enregistré dans la table utilisateur
+    $infosUtilisateur = getUtilisateur($user, $connex);
+    //si le résultat est vide, alors l'utilisateur n'est pas enregistré dans la table utilisateur
+    if(empty($infosUtilisateur)){
+        $utilisateur=false;
+    }
+    else {
+        $utilisateur=true;
+    }
+    //si toutes les conditions sont remplies, alors on peut ajouter la vente
+    if($produit && $stock && $utilisateur){
+        $sql = "INSERT INTO vente (vente_refuser, vente_refproduit, vente_date, vente_quantite) VALUES (:utilisateur, :barcode, :quantite) RETURNING vente_id";
+        $stmt = $connex->prepare($sql);
+        $stmt->bindValue(':utilisateur', $user);
+        $stmt->bindValue(':barcode', $barcode);
+        $stmt->bindValue(':quantite', $quantite);
+        //ajout de la date de la vente : timestamp
+        $stmt->bindValue(':date', time());
+        $stmt->execute();
+        $result = $stmt->fetchColumn();
+    }
+    //sinon on retourne les erreurs
+    else{
+        $result = array("erreur"=>true, "produit"=>$produit, "stock"=>$stock, "utilisateur"=>$utilisateur);
+    }
+    return $result;
+}
 ?>
