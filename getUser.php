@@ -25,6 +25,6 @@ else{
     $json = json_encode($result);
     //ajout d'une valeur de la clé message
     $json = substr_replace($json, '"message":"User found",', 1, 0);
-    echo $json;
+    die($json);
 }
 ?>

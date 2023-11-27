@@ -20,8 +20,10 @@ if ($result == null) {
     //affiche un message d'erreur formaté en JSON
     die(json_encode(array('message' => 'Product not found')));
 }
-$json = json_encode($result);
-//ajout d'une valeur de la clé message
-$json = substr_replace($json, '"message":"Product found",', 1, 0);
-echo $json;
+else {
+    $json = json_encode($result);
+    //ajout d'une valeur de la clé message
+    $json = substr_replace($json, '"message":"Product found",', 1, 0);
+    die($json);
+}
 ?>
