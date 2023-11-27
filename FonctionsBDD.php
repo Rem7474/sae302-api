@@ -21,7 +21,7 @@ function ajouterUtilisateur($nom, $prenom, $id, $connex){
 }
 //fonction pour ajouter un produit
 function ajoutProduit($barcode, $nom, $prixachat, $prixvente, $connex){
-    $sql = "INSERT INTO produit (produit_barcode, produit_nom, produit_prix_achat, produit_prix_vente) VALUES (:barcode, :nom, :prixachat, :prixvente) RETURNING produit_barecode";
+    $sql = "INSERT INTO produit (produit_barcode, produit_nom, produit_prix_achat, produit_prix_vente) VALUES (:barcode, :nom, :prixachat, :prixvente) RETURNING produit_barcode";
     $stmt = $connex->prepare($sql);
     $stmt->bindValue(':barcode', $barcode);
     $stmt->bindValue(':nom', $nom);
@@ -31,7 +31,7 @@ function ajoutProduit($barcode, $nom, $prixachat, $prixvente, $connex){
     $result = $stmt->fetchColumn();
     return $result;
 }
-//fonction pour récupérer les informations d'un produit à partir de son barecode
+//fonction pour récupérer les informations d'un produit à partir de son barcode
 function getProduit($barcode, $connex){
     $sql = "SELECT * FROM produit WHERE produit_barcode = :id";
     $stmt = $connex->prepare($sql);
@@ -57,7 +57,7 @@ function addStock($barcode, $stock, $connex){
     }
     return $result;
 }
-//fonction pour récupérer les informations d'un produit à partir de son barecode
+//fonction pour récupérer les informations d'un produit à partir de son barcode
 function getStock($barcode, $connex){
     $sql = "SELECT * FROM stock WHERE stock_barcode = :id";
     $stmt = $connex->prepare($sql);

@@ -4,15 +4,15 @@ include 'FonctionsBDD.php';
 //inclure le fichier fonctionsConnexion
 include 'FonctionsConnexion.php';
 header('Content-Type: application/json');
-if (empty($_GET['barecode'])) {
+if (empty($_GET['barcode'])) {
     //affiche un message d'erreur formaté en JSON
-    die(json_encode(array('message' => 'Missing barecode')));
+    die(json_encode(array('message' => 'Missing barcode')));
 }
-else if (!is_numeric($_GET['barecode'])) {
+else if (!is_numeric($_GET['barcode'])) {
     //affiche un message d'erreur formaté en JSON
-    die(json_encode(array('message' => 'barecode must be numeric')));
+    die(json_encode(array('message' => 'barcode must be numeric')));
 }
-$id = $_GET['barecode'];
+$id = $_GET['barcode'];
 //connexion à la base de données
 $connex=connexionBDD('./private/parametres.ini');
 $result = getProduit($id, $connex);
