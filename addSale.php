@@ -4,19 +4,20 @@ include 'FonctionsBDD.php';
 //inclure le fichier fonctionsConnexion
 include 'FonctionsConnexion.php';
 header('Content-Type: application/json');
-if (empty($_GET['barcode']) || empty($_GET['stock'])) {
+if (empty($_GET['iduser']) || empty($_GET['barcode']) || empty($_GET['quantite'])) {
     //affiche un message d'erreur formaté en JSON
     die(json_encode(array('message' => 'Missing information')));
 }
-else if (!is_numeric($_GET['barcode']) || !is_numeric($_GET['stock'])) {
+else if (!is_numeric($_GET['iduser']) || !is_numeric($_GET['barcode']) || !is_numeric($_GET['quantite'])) {
     //affiche un message d'erreur formaté en JSON
     die(json_encode(array('message' => 'Information must be numeric')));
 }
+$iduser = $_GET['iduser'];
 $barcode = $_GET['barcode'];
-$stock = $_GET['stock'];
+$stock = $_GET['quantite'];
 //connexion à la base de données
 $connex=connexionBDD('./private/parametres.ini');
-$result = addStock($barcode, $stock, $connex);
+$result = addVente($iduser, $barcode, $quantite ,$connex);
 if ($result["erreur"] != true) {
     //affiche un message de succès formaté en JSON
     die(json_encode(array('message' => 'sale added')));
