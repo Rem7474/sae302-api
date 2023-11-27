@@ -57,4 +57,30 @@ function addStock($barcode, $stock, $connex){
     }
     return $result;
 }
+//fonction pour récupérer les informations d'un produit à partir de son barecode
+function getStock($barcode, $connex){
+    $sql = "SELECT * FROM stock WHERE stock_barcode = :id";
+    $stmt = $connex->prepare($sql);
+    $stmt->bindValue(':id', $barcode);
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $result;
+}
+function updateStock($barcode, $stock, $connex){
+    //Vérifier si le produit est déja dans la table stock
+    $infosStock = getStock($barcode, $connex);
+    //si le résultat est vide, alors le produit n'est pas enregistré dans la table stock
+    if(empty($infosStock)){
+        $result = false;
+    }
+    else{
+        $sql = "UPDATE stock SET stock_quantite = :quantite WHERE stock_barcode = :barcode RETURNING stock_id";
+        $stmt = $connex->prepare($sql);
+        $stmt->bindValue(':barcode', $barcode);
+        $stmt->bindValue(':quantite', $stock);
+        $stmt->execute();
+        $result = $stmt->fetchColumn();
+    }
+    return $result;
+}
 ?>
