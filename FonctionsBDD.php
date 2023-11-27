@@ -20,10 +20,10 @@ function ajouterUtilisateur($nom, $prenom, $id, $connex){
     return $result;
 }
 //fonction pour ajouter un produit
-function ajoutProduit($barecode, $nom, $prixachat, $prixvente, $connex){
-    $sql = "INSERT INTO produit (produit_barecode, produit_nom, produit_prix_achat, produit_prix_vente) VALUES (:barecode, :nom, :prixachat, :prixvente) RETURNING produit_barecode";
+function ajoutProduit($barcode, $nom, $prixachat, $prixvente, $connex){
+    $sql = "INSERT INTO produit (produit_barcode, produit_nom, produit_prix_achat, produit_prix_vente) VALUES (:barcode, :nom, :prixachat, :prixvente) RETURNING produit_barecode";
     $stmt = $connex->prepare($sql);
-    $stmt->bindValue(':barecode', $barecode);
+    $stmt->bindValue(':barcode', $barcode);
     $stmt->bindValue(':nom', $nom);
     $stmt->bindValue(':prixachat', $prixachat);
     $stmt->bindValue(':prixvente', $prixvente);
@@ -32,18 +32,18 @@ function ajoutProduit($barecode, $nom, $prixachat, $prixvente, $connex){
     return $result;
 }
 //fonction pour récupérer les informations d'un produit à partir de son barecode
-function getProduit($barecode, $connex){
-    $sql = "SELECT * FROM produit WHERE produit_barecode = :id";
+function getProduit($barcode, $connex){
+    $sql = "SELECT * FROM produit WHERE produit_barcode = :id";
     $stmt = $connex->prepare($sql);
-    $stmt->bindValue(':id', $barecode);
+    $stmt->bindValue(':id', $barcode);
     $stmt->execute();
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     return $result;
 }
-function addStock($barecode, $stock, $connex){
-    $sql = "INSERT INTO stock (stock_barecode, stock_quantite) VALUES (:barecode, :quantite) RETURNING stock_id";
+function addStock($barcode, $stock, $connex){
+    $sql = "INSERT INTO stock (stock_barcode, stock_quantite) VALUES (:barcode, :quantite) RETURNING stock_id";
     $stmt = $connex->prepare($sql);
-    $stmt->bindValue(':barecode', $barecode);
+    $stmt->bindValue(':barcode', $barcode);
     $stmt->bindValue(':quantite', $stock);
     $stmt->execute();
     $result = $stmt->fetchColumn();
