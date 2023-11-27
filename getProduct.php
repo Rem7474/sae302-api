@@ -21,9 +21,8 @@ if ($result == null) {
     die(json_encode(array('message' => 'Product not found')));
 }
 else {
+    $result['message'] = 'Product found';
     $json = json_encode($result);
-    //ajout d'une valeur de la clé message
-    $json = substr_replace($json, '"message":"Product found",', 1, 0);
     die($json);
 }
 ?>
