@@ -41,7 +41,7 @@ function getProduit($barecode, $connex){
     return $result;
 }
 function addStock($barecode, $stock, $connex){
-    $sql = "INSERT INTO stock (stock_barecode, stock_quantite) VALUES (:barecode, :quantite) RETURNING stock_id"
+    $sql = "INSERT INTO stock (stock_barecode, stock_quantite) VALUES (:barecode, :quantite) RETURNING stock_id";
     $stmt = $connex->prepare($sql);
     $stmt->bindValue(':barecode', $barecode);
     $stmt->bindValue(':quantite', $stock);
