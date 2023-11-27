@@ -1,4 +1,9 @@
 <?php
+//affichage des erreurs et avertissements PHP
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 //inclure le fichier fonctionsBDD
 include 'FonctionsBDD.php';
 //inclure le fichier fonctionsConnexion
