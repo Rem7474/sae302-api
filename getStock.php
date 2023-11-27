@@ -17,10 +17,9 @@ $barcode = $_GET['barcode'];
 $connex=connexionBDD('./private/parametres.ini');
 $result = getStock($barcode, $connex);
 if ($result != null) {
+    $result['message'] = "Stock found";
     //affiche un message de succès formaté en JSON
     $json = json_encode($result);
-    //ajout d'une valeur de la clé message
-    $json = substr_replace($json, '"message":"Stock found",', 1, 0);
     die($json);
 }
 else {
