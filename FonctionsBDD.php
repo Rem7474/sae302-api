@@ -41,12 +41,20 @@ function getProduit($barcode, $connex){
     return $result;
 }
 function addStock($barcode, $stock, $connex){
-    $sql = "INSERT INTO stock (stock_barcode, stock_quantite) VALUES (:barcode, :quantite) RETURNING stock_id";
-    $stmt = $connex->prepare($sql);
-    $stmt->bindValue(':barcode', $barcode);
-    $stmt->bindValue(':quantite', $stock);
-    $stmt->execute();
-    $result = $stmt->fetchColumn();
+    //Etape 1 : vérifier si le produit est enregistré dans la table produit
+    $infosProduit = getProduit($barcode, $connex);
+    //si le résultat est vide, alors le produit n'est pas enregistré dans la table produit
+    if(!empty($infosProduit)){
+        $sql = "INSERT INTO stock (stock_barcode, stock_quantite) VALUES (:barcode, :quantite) RETURNING stock_id";
+        $stmt = $connex->prepare($sql);
+        $stmt->bindValue(':barcode', $barcode);
+        $stmt->bindValue(':quantite', $stock);
+        $stmt->execute();
+        $result = $stmt->fetchColumn();
+    }
+    else{
+        $result = false;
+    }
     return $result;
 }
 ?>

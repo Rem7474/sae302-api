@@ -22,12 +22,12 @@ $stock = $_GET['stock'];
 //connexion à la base de données
 $connex=connexionBDD('./private/parametres.ini');
 $result = addStock($barecode, $stock, $connex);
-if ($result != null) {
+if ($result != false) {
     //affiche un message de succès formaté en JSON
     die(json_encode(array('message' => 'Stock added')));
 }
 else {
     //affiche un message d'erreur formaté en JSON
-    die(json_encode(array('message' => 'Stock not added')));
+    die(json_encode(array('message' => 'Stock not added : Product not found')));
 }
 ?>
