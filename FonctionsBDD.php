@@ -99,6 +99,10 @@ function addVente($user, $barcode, $quantite, $connex){
     if(empty($infosStock)){
         $stock=false;
     }
+    //tester si la quantité demandée est disponible
+    else if($infosStock['stock_quantite']<$quantite){
+        $stock=false;
+    }
     else {
         $stock=true;
     }
