@@ -11,6 +11,12 @@ function ConnexionBDD($fichierParametre) {
         //print "Erreur de connexion à la base de données ! : " . $e->getMessage();
         die(""); // Arrêt du script - sortie.
     }
+    if ($debug == true){
+        //affichage des erreurs et avertissements PHP
+        ini_set('display_errors', 1);
+        ini_set('display_startup_errors', 1);
+        error_reporting(E_ALL);
+    }
     return $connex; // on retourne le connecteur (à l'appelant)
 }
 function DeconnexionBDD($connex) {
