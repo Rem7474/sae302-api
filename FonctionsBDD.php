@@ -40,4 +40,13 @@ function getProduit($barecode, $connex){
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     return $result;
 }
+function addStock($barecode, $stock, $connex){
+    $sql = "INSERT INTO stock (stock_barecode, stock_quantite) VALUES (:barecode, :quantite) RETURNING stock_id"
+    $stmt = $connex->prepare($sql);
+    $stmt->bindValue(':barecode', $barecode);
+    $stmt->bindValue(':quantite', $stock);
+    $stmt->execute();
+    $result = $stmt->fetchColumn();
+    return $result;
+}
 ?>
