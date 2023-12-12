@@ -1,4 +1,5 @@
 <?php
+header("Access-Control-Allow-Origin: *");
 //inclure le fichier fonctionsBDD
 include 'FonctionsBDD.php';
 //inclure le fichier fonctionsConnexion
