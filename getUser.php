@@ -9,9 +9,9 @@ if (empty($_GET['id'])) {
     //affiche un message d'erreur formaté en JSON
     die(json_encode(array('message' => 'Missing id')));
 }
-else if (!is_numeric($_GET['id'])) {
+else if (!is_string($_GET['id'])) {
     //affiche un message d'erreur formaté en JSON
-    die(json_encode(array('message' => 'id must be numeric')));
+    die(json_encode(array('message' => 'id must be string')));
 }
 $id = $_GET['id'];
 //connexion à la base de données

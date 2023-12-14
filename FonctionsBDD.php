@@ -9,12 +9,13 @@ function getUtilisateur($id, $connex){
     return $result;
 }
 //fonction pour ajouter un utilisateur
-function ajouterUtilisateur($nom, $prenom, $id, $connex){
-    $sql = "INSERT INTO utilisateur (utilisateur_rfid_uid, utilisateur_nom, utilisateur_prenom) VALUES (:id, :nom, :prenom) RETURNING utilisateur_id";
+function ajouterUtilisateur($nom, $prenom, $id, $nbconso, $connex){
+    $sql = "INSERT INTO utilisateur (utilisateur_rfid_uid, utilisateur_nom, utilisateur_prenom, utilisateur_conso) VALUES (:id, :nom, :prenom, :nbconso) RETURNING utilisateur_id";
     $stmt = $connex->prepare($sql);
     $stmt->bindValue(':id', $id);
     $stmt->bindValue(':nom', $nom);
     $stmt->bindValue(':prenom', $prenom);
+    $stmt->bindValue(':nbconso', $nbconso);
     $stmt->execute();
     $result = $stmt->fetchColumn();
     return $result;
