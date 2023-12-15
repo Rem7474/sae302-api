@@ -19,6 +19,11 @@ $prixachat = $_GET['prixachat'];
 $prixvente = $_GET['prixvente'];
 //connexion à la base de données
 $connex=connexionBDD('./private/parametres.ini');
+//vérfication si le produit existe déjà
+if (getProduit($barcode, $connex) != null) {
+    //affiche un message d'erreur formaté en JSON
+    die(json_encode(array('message' => 'Product already exists')));
+}
 $result = ajoutProduit($barcode, $nom, $prixachat, $prixvente, $connex);
 if ($result != null) {
     //affiche un message de succès formaté en JSON
