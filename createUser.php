@@ -21,7 +21,7 @@ $nbconso = $_GET['nbconso'];
 //connexion à la base de données
 $connex=connexionBDD('./private/parametres.ini');
 //vérfication si l'utilisateur existe déjà
-if (utilisateurExiste($id, $connex)) {
+if (getUtilisateur($id, $connex) != null) {
     //affiche un message d'erreur formaté en JSON
     die(json_encode(array('message' => 'User already exists')));
 }
