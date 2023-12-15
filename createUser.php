@@ -20,6 +20,11 @@ $prenom = $_GET['prenom'];
 $nbconso = $_GET['nbconso'];
 //connexion à la base de données
 $connex=connexionBDD('./private/parametres.ini');
+//vérfication si l'utilisateur existe déjà
+if (utilisateurExiste($id, $connex)) {
+    //affiche un message d'erreur formaté en JSON
+    die(json_encode(array('message' => 'User already exists')));
+}
 $result=ajouterUtilisateur($nom, $prenom, $id, $nbconso, $connex);
 //test si l'utilisateur a bien été ajouté (si l'id de l'utilisateur est retourné)
 if ($result != null) {
