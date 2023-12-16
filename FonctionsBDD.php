@@ -32,6 +32,25 @@ function ajoutProduit($barcode, $nom, $prixachat, $prixvente, $connex){
     $result = $stmt->fetchColumn();
     return $result;
 }
+function updateProduit($barcode, $nom, $prixachat, $prixvente, $connex){
+    //Vérifier si le produit est déja dans la table produit
+    $infosProduit = getProduit($barcode, $connex);
+    //si le résultat est vide, alors le produit n'est pas enregistré dans la table produit
+    if(empty($infosProduit)){
+        $result = false;
+    }
+    else{
+        $sql = "UPDATE produit SET produit_nom = :nom, produit_prix_achat = :prixachat, produit_prix_vente = :prixvente WHERE produit_barcode = :barcode RETURNING produit_barcode";
+        $stmt = $connex->prepare($sql);
+        $stmt->bindValue(':barcode', $barcode);
+        $stmt->bindValue(':nom', $nom);
+        $stmt->bindValue(':prixachat', $prixachat);
+        $stmt->bindValue(':prixvente', $prixvente);
+        $stmt->execute();
+        $result = $stmt->fetchColumn();
+    }
+    return $result;
+}
 //fonction pour récupérer les informations d'un produit à partir de son barcode
 function getProduit($barcode, $connex){
     $sql = "SELECT * FROM produit WHERE produit_barcode = :id";
