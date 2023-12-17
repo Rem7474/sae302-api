@@ -22,10 +22,10 @@ $connex=connexionBDD('./private/parametres.ini');
 $result = updateProduit($barcode, $nom, $prixachat, $prixvente, $connex);
 if ($result != false) {
     //affiche un message de succès formaté en JSON
-    die(json_encode(array('message' => 'Stock updated')));
+    die(json_encode(array('message' => 'Product updated')));
 }
 else {
     //affiche un message d'erreur formaté en JSON
-    die(json_encode(array('message' => 'Stock not updated')));
+    die(json_encode(array('message' => 'Product not updated')));
 }
 ?>
