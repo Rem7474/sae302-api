@@ -145,13 +145,13 @@ function addVente($user, $barcode, $quantite, $connex){
     }
     //si toutes les conditions sont remplies, alors on peut ajouter la vente
     if($produit && $stock && $utilisateur && $conso_utilisateur){
-        $sql = "INSERT INTO vente (vente_refuser, vente_refproduit, vente_date, vente_quantite) VALUES (:utilisateur, :barcode, :date, :quantite) RETURNING vente_id";
+        $sql = "INSERT INTO vente (vente_refuser, vente_refproduit, vente_date, vente_quantite) VALUES (:utilisateur, :barcode, :horodatage, :quantite) RETURNING vente_id";
         $stmt = $connex->prepare($sql);
         $stmt->bindValue(':utilisateur', $user);
         $stmt->bindValue(':barcode', $barcode);
         $stmt->bindValue(':quantite', $quantite);
         //ajout de la date de la vente : timestamp
-        $stmt->bindValue(':date', time());
+        $stmt->bindValue(':horodatage', time());
         $stmt->execute();
         $result1 = $stmt->fetchColumn();
         //mise à jour du stock
