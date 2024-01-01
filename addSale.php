@@ -1,5 +1,9 @@
 <?php
 header("Access-Control-Allow-Origin: *");
+//affiche les erreurs et les avertissements PHP
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 //inclure le fichier fonctionsBDD
 include 'FonctionsBDD.php';
 //inclure le fichier fonctionsConnexion
