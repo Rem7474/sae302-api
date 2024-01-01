@@ -107,7 +107,7 @@ function addVente($user, $barcode, $quantite, $connex){
     //Etape 1 : vérifier si le produit est enregistré dans la table produit
     $infosProduit = getProduit($barcode, $connex);
     //si le résultat est vide, alors le produit n'est pas enregistré dans la table produit
-    if(!empty($infosProduit)){
+    if(empty($infosProduit)){
         $produit=false;
     }
     else {
