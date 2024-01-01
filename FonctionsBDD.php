@@ -154,7 +154,7 @@ function addVente($user, $barcode, $quantite, $connex){
         $stmt->bindValue(':barcode', $barcode);
         $stmt->bindValue(':quantite', $quantite);
         //ajout de la date de la vente : timestamp
-        $stmt->bindValue(':horodatage', time());
+        $stmt->bindValue(':horodatage', date('Y-m-d H:i:s', time()));
         $stmt->execute();
         $result1 = $stmt->fetchColumn();
         //mise à jour du stock
