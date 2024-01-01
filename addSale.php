@@ -9,7 +9,7 @@ if (empty($_GET['iduser']) || empty($_GET['barcode']) || empty($_GET['quantite']
     //affiche un message d'erreur formaté en JSON
     die(json_encode(array('message' => 'Missing information')));
 }
-else if (!is_numeric($_GET['iduser']) || !is_numeric($_GET['barcode']) || !is_numeric($_GET['quantite'])) {
+else if (!is_string($_GET['iduser']) || !is_numeric($_GET['barcode']) || !is_numeric($_GET['quantite'])) {
     //affiche un message d'erreur formaté en JSON
     die(json_encode(array('message' => 'Information must be numeric')));
 }
