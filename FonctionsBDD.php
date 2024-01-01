@@ -135,8 +135,16 @@ function addVente($user, $barcode, $quantite, $connex){
     else {
         $utilisateur=true;
     }
+    //tester si l'utilisateur a assez de consommations
+    $prix=$quantite*$infosProduit['produit_prix_vente']/0.8;
+    if($infosUtilisateur['utilisateur_conso']<$prix){
+        $conso_utilisateur=false;
+    }
+    else {
+        $conso_utilisateur=true;
+    }
     //si toutes les conditions sont remplies, alors on peut ajouter la vente
-    if($produit && $stock && $utilisateur){
+    if($produit && $stock && $utilisateur && $conso_utilisateur){
         $sql = "INSERT INTO vente (vente_refuser, vente_refproduit, vente_date, vente_quantite) VALUES (:utilisateur, :barcode, :quantite) RETURNING vente_id";
         $stmt = $connex->prepare($sql);
         $stmt->bindValue(':utilisateur', $user);
@@ -145,11 +153,29 @@ function addVente($user, $barcode, $quantite, $connex){
         //ajout de la date de la vente : timestamp
         $stmt->bindValue(':date', time());
         $stmt->execute();
-        $result = $stmt->fetchColumn();
+        $result1 = $stmt->fetchColumn();
+        //mise à jour du stock
+        $newStock = $infosStock['stock_quantite']-$quantite;
+        $result2= updateStock($barcode, $newStock, $connex);
+        //mise à jour du nombre de consommations de l'utilisateur
+        $nbconso = $infosUtilisateur['utilisateur_conso']-($quantite*$infosProduit['produit_prix_vente']/0.8);
+        $sql = "UPDATE utilisateur SET utilisateur_conso = :nbconso WHERE utilisateur_rfid_uid = :id RETURNING utilisateur_id";
+        $stmt = $connex->prepare($sql);
+        $stmt->bindValue(':id', $user);
+        $stmt->bindValue(':nbconso', $nbconso);
+        $stmt->execute();
+        $result3 = $stmt->fetchColumn();
+        //test si toutes les requêtes ont été exécutées
+        if (!empty($result1) && !empty($result2) && !empty($result3)) {
+            $result = array("erreur"=>false, "produit"=>$produit, "stock"=>$stock, "utilisateur"=>$utilisateur, "conso"=>$conso_utilisateur, "message"=>"sale added");
+        }
+        else {
+            $result = array("erreur"=>true, "produit"=>$produit, "stock"=>$stock, "utilisateur"=>$utilisateur, "conso"=>$conso_utilisateur, "message"=>"Error while adding sale");
+        }
     }
     //sinon on retourne les erreurs
     else{
-        $result = array("erreur"=>true, "produit"=>$produit, "stock"=>$stock, "utilisateur"=>$utilisateur);
+        $result = array("erreur"=>true, "produit"=>$produit, "stock"=>$stock, "utilisateur"=>$utilisateur, "conso"=>$conso_utilisateur, "message"=>"Error while adding sale");
     }
     return $result;
 }
