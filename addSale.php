@@ -15,7 +15,7 @@ else if (!is_numeric($_GET['iduser']) || !is_numeric($_GET['barcode']) || !is_nu
 }
 $iduser = $_GET['iduser'];
 $barcode = $_GET['barcode'];
-$stock = $_GET['quantite'];
+$quantite = $_GET['quantite'];
 //connexion à la base de données
 $connex=connexionBDD('./private/parametres.ini');
 $result = addVente($iduser, $barcode, $quantite ,$connex);
