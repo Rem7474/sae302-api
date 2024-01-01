@@ -104,6 +104,8 @@ function updateStock($barcode, $stock, $connex){
     return $result;
 }
 function addVente($user, $barcode, $quantite, $connex){
+    //conversion de la quantité en entier
+    $quantite = intval($quantite);
     //Etape 1 : vérifier si le produit est enregistré dans la table produit
     $infosProduit = getProduit($barcode, $connex);
     //si le résultat est vide, alors le produit n'est pas enregistré dans la table produit
