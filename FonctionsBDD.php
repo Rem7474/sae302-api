@@ -131,23 +131,26 @@ function addVente($user, $barcode, $quantite, $connex){
     //si le résultat est vide, alors l'utilisateur n'est pas enregistré dans la table utilisateur
     if(empty($infosUtilisateur)){
         $utilisateur=false;
-    }
-    else {
-        $utilisateur=true;
-    }
-    //tester si l'utilisateur a assez de consommations
-    $prix=$quantite*$infosProduit['produit_prix_vente']/0.8;
-    if($infosUtilisateur['utilisateur_conso']<$prix){
         $conso_utilisateur=false;
     }
     else {
-        $conso_utilisateur=true;
+        $utilisateur=true;
+        $idUser=$infosUtilisateur['utilisateur_id'];
+        //tester si l'utilisateur a assez de consommations
+        $prix=$quantite*$infosProduit['produit_prix_vente']/0.8;
+        if($infosUtilisateur['utilisateur_conso']<$prix){
+            
+        }
+        else {
+            $conso_utilisateur=true;
+        }
     }
+    
     //si toutes les conditions sont remplies, alors on peut ajouter la vente
     if($produit && $stock && $utilisateur && $conso_utilisateur){
         $sql = "INSERT INTO vente (vente_refuser, vente_refproduit, vente_date, vente_quantite) VALUES (:utilisateur, :barcode, :horodatage, :quantite) RETURNING vente_id";
         $stmt = $connex->prepare($sql);
-        $stmt->bindValue(':utilisateur', $user);
+        $stmt->bindValue(':utilisateur', $idUser);
         $stmt->bindValue(':barcode', $barcode);
         $stmt->bindValue(':quantite', $quantite);
         //ajout de la date de la vente : timestamp
