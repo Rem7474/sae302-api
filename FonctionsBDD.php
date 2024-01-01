@@ -145,7 +145,7 @@ function addVente($user, $barcode, $quantite, $connex){
     }
     //si toutes les conditions sont remplies, alors on peut ajouter la vente
     if($produit && $stock && $utilisateur && $conso_utilisateur){
-        $sql = "INSERT INTO vente (vente_refuser, vente_refproduit, vente_date, vente_quantite) VALUES (:utilisateur, :barcode, :quantite) RETURNING vente_id";
+        $sql = "INSERT INTO vente (vente_refuser, vente_refproduit, vente_date, vente_quantite) VALUES (:utilisateur, :barcode, :date, :quantite) RETURNING vente_id";
         $stmt = $connex->prepare($sql);
         $stmt->bindValue(':utilisateur', $user);
         $stmt->bindValue(':barcode', $barcode);
