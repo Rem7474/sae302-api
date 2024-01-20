@@ -86,6 +86,14 @@ function getStock($barcode, $connex){
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     return $result;
 }
+//fonction pour récupérer toutes les informations de touts les produits en stock + les informations du produits
+function getAllStock($connex){
+    $sql = "SELECT * FROM stock INNER JOIN produit ON stock.stock_barcode = produit.produit_barcode";
+    $stmt = $connex->prepare($sql);
+    $stmt->execute();
+    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    return $result;
+}
 function updateStock($barcode, $stock, $connex){
     //Vérifier si le produit est déja dans la table stock
     $infosStock = getStock($barcode, $connex);
