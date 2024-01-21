@@ -202,4 +202,14 @@ function getAllSales($connex){
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
     return $result;
 }
+//fonction pour modifier le nombre de consommations d'un utilisateur
+function updateConso($id, $nbconso, $connex){
+    $sql = "UPDATE utilisateur SET utilisateur_conso = :nbconso WHERE utilisateur_rfid_uid = :id RETURNING utilisateur_id";
+    $stmt = $connex->prepare($sql);
+    $stmt->bindValue(':id', $id);
+    $stmt->bindValue(':nbconso', $nbconso);
+    $stmt->execute();
+    $result = $stmt->fetchColumn();
+    return $result;
+}
 ?>
