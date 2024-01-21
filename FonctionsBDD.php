@@ -192,4 +192,14 @@ function addVente($user, $barcode, $quantite, $connex){
     }
     return $result;
 }
+function getAllSales($connex){
+    $sql = "SELECT * FROM vente 
+        INNER JOIN utilisateur ON vente.vente_refuser = utilisateur.utilisateur_id
+        INNER JOIN produit ON vente.vente_refproduit = produit.produit_barcode
+        ORDER BY vente.vente_date DESC LIMIT 10";
+    $stmt = $connex->prepare($sql);
+    $stmt->execute();
+    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    return $result;
+}
 ?>
